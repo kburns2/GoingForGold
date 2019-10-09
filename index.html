@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+ </head>
+
+  <body>
+      <h3>Image of Tennis Player</h3>
+      <img id='tennis' src='/images/tennis_player2.jpg '/>
+  </body>
+  <!-- Place your code in the script tag below. You can also use an external .js file -->
+
+  <!-- Try GIF of tennis players -->
+  <script>
+    var flipHorizontal = false;
+
+    var imageElement = document.getElementById('tennis');
+
+    posenet.load().then(function(net) {
+      const pose = net.estimateSinglePose(imageElement, {
+        flipHorizontal: true
+      });
+      return pose;
+    }).then(function(pose){
+      console.log(pose);
+    })
+  </script>
+</html>
