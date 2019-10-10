@@ -9,20 +9,24 @@
   <body>
     <!-- <img id='cat' src='/images/cat.jpeg '/> -->
     <img id='tennis1' src='/tennis_serve/1.png'/>
+    <img id='tennis2' src='/tennis_serve/2.png'/>
   </body>
   <!-- Place your code in the script tag below. You can also use an external .js file -->
   <script>
     var flipHorizontal = false;
+    arr = ["tennis1", "tennis2"]
+    for (i = 0; i < arr.length; i++){
+      var imageElement = document.getElementById(arr[i]);
 
-    var imageElement = document.getElementById('tennis1');
+      posenet.load().then(function(net) {
+        const pose = net.estimateSinglePose(imageElement, {
+          flipHorizontal: true
+        });
+        return pose;
+      }).then(function(pose){
+        console.log(pose);
+      })
+    }
 
-    posenet.load().then(function(net) {
-      const pose = net.estimateSinglePose(imageElement, {
-        flipHorizontal: true
-      });
-      return pose;
-    }).then(function(pose){
-      console.log(pose);
-    })
   </script>
 </html>
