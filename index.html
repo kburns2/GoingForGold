@@ -1,32 +1,63 @@
 <html>
   <head>
-    <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <!-- Load Posenet -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+   
  </head>
 
   <body>
-    <!-- <img id='cat' src='/images/cat.jpeg '/> -->
-    <img id='tennis1' src='/tennis_serve/1.png'/>
-    <img id='tennis2' src='/tennis_serve/2.png'/>
+
+    <video id = "video"  src="/video/tennis_serving.mp4"></video>
+    <canvas id="thecanvas" width="800" height="600"></canvas>
   </body>
-  <!-- Place your code in the script tag below. You can also use an external .js file -->
+
   <script>
-    var flipHorizontal = false;
-    arr = ["tennis1", "tennis2"]
-    for (i = 0; i < arr.length; i++){
-      var imageElement = document.getElementById(arr[i]);
+      var video = document.getElementById("video"); 
+      var i = 0; 
 
-      posenet.load().then(function(net) {
-        const pose = net.estimateSinglePose(imageElement, {
-          flipHorizontal: true
-        });
-        return pose;
-      }).then(function(pose){
-        console.log(pose);
-      })
-    }
+      video.addEventListener('loadeddata', function() {
+          this.currentTime = i;
+          console.log(i);
+      });
 
+      video.addEventListener('loadeddata', function() {
+      var duration = video.duration;
+      var i = 0;
+      var interval = setInterval(function() {
+          video.currentTime = i;
+          generateThumbnail(i);
+          i = i+1;
+          if (i > duration) clearInterval(interval);
+      }, 200);
+    });
+
+      function generateThumbnail(i) {     
+    
+          var context = thecanvas.getContext('2d');
+          context.drawImage(video, 0, 0, 800, 600);
+          var dataURL = thecanvas.toDataURL();
+          var img = document.createElement('img');
+          img.setAttribute('src', dataURL);
+          document.getElementById('thecanvas').appendChild(img);
+          posenet.load().then(function(net) {
+          const pose = net.estimateSinglePose(img, {
+            flipHorizontal: true
+              });
+              return pose;
+            }).then(function(pose){
+              console.log(pose);
+            })
+      }
+
+      video.addEventListener('seeked', function() {
+          generateThumbnail(i);
+          i += 0.5;
+          if (i <= this.duration) {
+              this.currentTime = i;
+          }
+          else {
+              // Do something idk 
+          }
+      });
   </script>
 </html>
