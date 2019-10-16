@@ -1,63 +1,69 @@
 <html>
-  <head>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
-   
- </head>
+    <script src="index.js"></script>
+</head>
 
-  <body>
+<body>
 
-    <video id = "video"  src="/video/tennis_serving.mp4"></video>
+    <video id="video" src="/video/tennis_serving.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
-  </body>
+</body>
 
-  <script>
-      var video = document.getElementById("video"); 
-      var i = 0; 
+<script>
+    var video = document.getElementById("video");
+    var i = 0;
 
-      video.addEventListener('loadeddata', function() {
-          this.currentTime = i;
-          console.log(i);
-      });
-
-      video.addEventListener('loadeddata', function() {
-      var duration = video.duration;
-      var i = 0;
-      var interval = setInterval(function() {
-          video.currentTime = i;
-          generateThumbnail(i);
-          i = i+1;
-          if (i > duration) clearInterval(interval);
-      }, 200);
+    video.addEventListener('loadeddata', function() {
+        this.currentTime = i;
+        console.log(i);
     });
 
-      function generateThumbnail(i) {     
-    
-          var context = thecanvas.getContext('2d');
-          context.drawImage(video, 0, 0, 800, 600);
-          var dataURL = thecanvas.toDataURL();
-          var img = document.createElement('img');
-          img.setAttribute('src', dataURL);
-          document.getElementById('thecanvas').appendChild(img);
-          posenet.load().then(function(net) {
-          const pose = net.estimateSinglePose(img, {
-            flipHorizontal: true
-              });
-              return pose;
-            }).then(function(pose){
-              console.log(pose);
-            })
-      }
+    video.addEventListener('loadeddata', function() {
+        var duration = video.duration;
+        var i = 0;
+        var interval = setInterval(function() {
+            video.currentTime = i;
+            generateThumbnail(i);
+            i = i + 1;
+            if (i > duration) clearInterval(interval);
+        }, 200);
+    });
 
-      video.addEventListener('seeked', function() {
-          generateThumbnail(i);
-          i += 0.5;
-          if (i <= this.duration) {
-              this.currentTime = i;
-          }
-          else {
-              // Do something idk 
-          }
-      });
-  </script>
+    function generateThumbnail(i) {
+
+        var context = thecanvas.getContext('2d');
+        context.drawImage(video, 0, 0, 800, 600);
+        var dataURL = thecanvas.toDataURL();
+        var img = document.createElement('img');
+        img.setAttribute('src', dataURL);
+        document.getElementById('thecanvas').appendChild(img);
+        posenet.load().then(function(net) {
+            const pose = net.estimateSinglePose(img, {
+                flipHorizontal: true
+            });
+            return pose;
+        }).then(function(pose) {
+            keypoints = pose.keypoints;
+            //console.log(keypoints);
+            console.log(pose);
+            draw();
+        })
+    }
+
+    video.addEventListener('seeked', function() {
+        generateThumbnail(i);
+        i += 0.5;
+        if (i <= this.duration) {
+            this.currentTime = i;
+        } else {
+            // Do something idk 
+        }
+    });
+</script>
+
 </html>
