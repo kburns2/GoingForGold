@@ -27,10 +27,20 @@
 var videoSize = 800;
 var minPartConfidence = 0.3;
 var capture;
+var keypoints = [];
 
 function draw() {
+    capture = createCapture({
+        video: {
+          width: videoSize,
+          height: videoSize
+        }
+    });
+    capture.size(videoSize, videoSize);
+    capture.hide();
+
     background(255);
-    image(capture, 0, 0, videoSize, videoSize);
+    image(capture, 0, 0, 800, 600);
 
     noStroke();
     // draw keypoints
@@ -41,7 +51,7 @@ function draw() {
             // for wrists, make the part red
             if (i == posenet.partIds['leftWrist'] || i == posenet.partIds['rightWrist'])
                 fill(255, 0, 0);
-            // all other parts are yello
+            // all other parts are yellow
             else
                 fill(255, 255, 0);
 
@@ -51,16 +61,16 @@ function draw() {
 
     // get skeleton, filtering out parts wtihout
     // a high enough confidence level
-    if (keypoints.length > 0) {
-        stroke(255, 255, 0);
-        var skeleton = posenet.getAdjacentKeyPoints(keypoints, minPartConfidence);
-        for (var i = 0; i < skeleton.length; i++) {
-            // draw each line in the skeleton
-            var segment = skeleton[i];
-            line(
-                segment[0].position.x, segment[0].position.y,
-                segment[1].position.x, segment[1].position.y
-            );
-        }
-    }
+    // if (keypoints.length > 0) {
+    //     stroke(255, 255, 0);
+    //     var skeleton = posenet.getAdjacentKeyPoints(keypoints, minPartConfidence);
+    //     for (var i = 0; i < skeleton.length; i++) {
+    //         // draw each line in the skeleton
+    //         var segment = skeleton[i];
+    //         line(
+    //             segment[0].position.x, segment[0].position.y,
+    //             segment[1].position.x, segment[1].position.y
+    //         );
+    //     }
+    // }
 }
