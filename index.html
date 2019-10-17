@@ -16,38 +16,33 @@
 <script>
     //Variables
     var keypoints;
-    var i;
+    var tStamp; //capture image and move it over and putting it in small canvas
     var minPartConfidence;
-
 
     function setup() {
         createCanvas(800, 600);
         background(10, 0, 0);
-        i = 0;
+        tStamp = 0;
         minPartConfidence = 0.3;
-
     }
 
     video.addEventListener('loadeddata', function() {
-        this.currentTime = i;
-        console.log(i);
+        this.currentTime = tStamp;
+        console.log(tStamp);
     });
 
     video.addEventListener('loadeddata', function() {
         var duration = video.duration;
-        var i = 0;
+        var tStamp = 0;
         var interval = setInterval(function() {
-            video.currentTime = i;
-            generateThumbnail(i);
-            i = i + 1;
-            if (i > duration) clearInterval(interval);
+            video.currentTime = tStamp;
+            generateThumbnail(tStamp);
+            tStamp = tStamp + 1;
+            if (tStamp > duration) clearInterval(interval); //tStamp is the duration of the video
         }, 200);
     });
 
-
-
-    function generateThumbnail(i) {
-
+    function generateThumbnail(tStamp) {
         var context = thecanvas.getContext('2d');
         context.drawImage(video, 0, 0, 800, 600);
         var dataURL = thecanvas.toDataURL();
@@ -61,14 +56,14 @@
             return pose;
         }).then(function(pose) {
             console.log(pose);
-            keypoints = pose.keypoints;
-            draw();
+            keypoints = pose.keypoints; //different x,y values; keypoint is array
+            draw(); //calls per frame
         })
     }
 
     function draw() {
-        background(0);
-        for (var i = 0; i < keypoints.length; i++) {
+        background(0); //sets a black background
+        for (var i = 0; i < keypoints.length; i++) { //array length 
             var keypoint = keypoints[i];
             if (keypoint.score > minPartConfidence) {
                 if (i == posenet.partIds['leftWrist'] || i == posenet.partIds['rightWrist']) {
@@ -84,7 +79,7 @@
                     // fill(255, 255, 0);
                     fill(0, 255, 0);
                     noStroke();
-                    ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+                    ellipse(keypoint.position.x, keypoint.position.y, 10, 10); //draws the dot  
                 }
                 if (i == posenet.partIds['leftWrist']) {
                     var pointX = keypoint.position.x;
@@ -99,15 +94,13 @@
                 line(pointX, pointY, ptX, ptY);
             }
         }
-
     }
 
-
     video.addEventListener('seeked', function() {
-        generateThumbnail(i);
-        i += 0.5;
-        if (i <= this.duration) {
-            this.currentTime = i;
+        generateThumbnail(tStamp);
+        tStamp += 0.5;
+        if (tStamp <= this.duration) {
+            this.currentTime = tStamp;
         } else {
             // Do something idk 
         }
