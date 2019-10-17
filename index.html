@@ -76,12 +76,14 @@
                     //reason why we wrote window.onload = setup()
                     fill(255, 0, 0);
                     rectMode(CENTER);
+                    noStroke();
                     rect(keypoint.position.x, keypoint.position.y, 10, 10);
 
                 } else {
                     //maybe instead of dots draw lines?
                     // fill(255, 255, 0);
                     fill(0, 255, 0);
+                    noStroke();
                     ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
                 }
                 if (i == posenet.partIds['leftWrist']) {
@@ -93,6 +95,7 @@
                     var ptY = keypoint.position.y;
                 }
                 stroke(255);
+                strokeWeight(4);
                 line(pointX, pointY, ptX, ptY);
             }
         }
