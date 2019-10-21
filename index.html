@@ -1,97 +1,196 @@
 <html>
-  <head>
+
+<head>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
-    <script src="p5.js"> </script>
- </head>
+    <script src="p5.js"></script>
+    <!-- <script scr="index.js"></script> -->
+</head>
 
-  <body>
+<body>
 
-    <video id = "video"  src="/video/tennis_serving.mp4"></video>
+    <video id="video" src="/video/tennis_serving.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
-  </body>
+</body>
 
-  <script>
+<script>
     //Variables
-      var keypoints;
-      var i; 
-      var minPartConfidence;
+    var keypoints;
+    var tStamp; //capture image and move it over and putting it in small canvas
+    var minPartConfidence;
 
-
-      function setup(){ 
-        createCanvas(800,600);
-        background(10,0,0);
-        i =0; 
+    function setup() {
+        bg = loadImage("tStamp")
+        createCanvas(800, 600);
+        //background(10, 0, 0);
+        tStamp = 0;
         minPartConfidence = 0.3;
-        
-      }
-      
-      video.addEventListener('loadeddata', function() {
-          this.currentTime = i;
-          console.log(i);
-        });
-
-        video.addEventListener('loadeddata', function() {
+    }
+    video.addEventListener('loadeddata', function() {
+        this.currentTime = tStamp;
+        console.log(tStamp);
+    });
+    video.addEventListener('loadeddata', function() {
         var duration = video.duration;
-        var i = 0;
+        var tStamp = 0;
         var interval = setInterval(function() {
-            video.currentTime = i;
-            generateThumbnail(i);
-            i = i+1;
-            if (i > duration) clearInterval(interval);
-          }, 200);
-        });
+            video.currentTime = tStamp;
+            generateThumbnail(tStamp);
+            tStamp = tStamp + 1;
+            if (tStamp > duration) clearInterval(interval); //tStamp is the duration of the video
+        }, 200);
+    });
 
-      
-      
-      function generateThumbnail(i) {     
-    
-          var context = thecanvas.getContext('2d');
-          context.drawImage(video, 0, 0, 800, 600);
-          var dataURL = thecanvas.toDataURL();
-          var img = document.createElement('img');
-          img.setAttribute('src', dataURL);
-          document.getElementById('thecanvas').appendChild(img);
-          posenet.load().then(function(net) {
-          const pose = net.estimateSinglePose(img, {
-            flipHorizontal: true
-              });
-              return pose;
-            }).then(function(pose){
-              console.log(pose);
-              keypoints = pose.keypoints; 
-              draw();
-            })
-      }
+    function generateThumbnail(tStamp) {
+        var context = thecanvas.getContext('2d');
+        context.drawImage(video, 0, 0, 800, 600);
+        var dataURL = thecanvas.toDataURL();
+        var img = document.createElement('img');
+        img.setAttribute('src', dataURL);
+        document.getElementById('thecanvas').appendChild(img);
+        posenet.load().then(function(net) {
+            const pose = net.estimateSinglePose(img, {
+                flipHorizontal: false
+            });
+            return pose;
+        }).then(function(pose) {
+            console.log(pose);
+            keypoints = pose.keypoints; //different x,y values; keypoint is array
+            draw(); //calls per frame
+        })
+    }
 
-      function draw(){ 
+    var bits = [];
+
+    function collect() {
         for (var i = 0; i < keypoints.length; i++) {
-        var keypoint = keypoints[i];
-        if (keypoint.score > minPartConfidence) {
-            if (i == posenet.partIds['leftWrist'] || i == posenet.partIds['rightWrist'])
-                //P5 only starts after you call setup()
-                //reason why we wrote window.onload = setup()
-                fill(255, 0, 0);
-            else
-                //maybe instead of dots draw lines?
-                fill(255, 255, 0);
-
-            ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+            var keypoint = keypoints[i];
+            if (keypoint.score > minPartConfidence) {
+                if (i == posenet.partIds['leftWrist']) {
+                    var LWristX = keypoint.position.x;
+                    var LWristY = keypoint.position.y;
+                    bits[0] = LWristX;
+                    bits[1] = LWristY;
+                }
+                if (i == posenet.partIds['rightWrist']) {
+                    var RWristX = keypoint.position.x;
+                    var RWristY = keypoint.position.y;
+                    bits[2] = RWristX;
+                    bits[3] = RWristY;
+                }
+                if (i == posenet.partIds['leftElbow']) {
+                    var LElbowX = keypoint.position.x;
+                    var LElbowY = keypoint.position.y;
+                    bits[4] = LElbowX;
+                    bits[5] = LElbowY;
+                }
+                if (i == posenet.partIds['rightElbow']) {
+                    var RElbowX = keypoint.position.x;
+                    var RElbowY = keypoint.position.y;
+                    bits[6] = RElbowX;
+                    bits[7] = RElbowY;
+                }
+                if (i == posenet.partIds['leftHip']) {
+                    var LHipX = keypoint.position.x;
+                    var LHipY = keypoint.position.y;
+                    bits[8] = LHipX;
+                    bits[9] = LHipY;
+                }
+                if (i == posenet.partIds['rightHip']) {
+                    var RHipX = keypoint.position.x;
+                    var RHipY = keypoint.position.y;
+                    bits[10] = RHipX;
+                    bits[11] = RHipY;
+                }
+                if (i == posenet.partIds['leftKnee']) {
+                    var LKneeX = keypoint.position.x;
+                    var LKneeY = keypoint.position.y;
+                    bits[12] = LKneeX;
+                    bits[13] = LKneeY;
+                }
+                if (i == posenet.partIds['rightKnee']) {
+                    var RKneeX = keypoint.position.x;
+                    var RKneeY = keypoint.position.y;
+                    bits[14] = RKneeX;
+                    bits[15] = RKneeY;
+                }
+                if (i == posenet.partIds['leftAnkle']) {
+                    var LAnkleX = keypoint.position.x;
+                    var LAnkleY = keypoint.position.y;
+                    bits[16] = LAnkleX;
+                    bits[17] = LAnkleY;
+                }
+                if (i == posenet.partIds['rightAnkle']) {
+                    var RAnkleX = keypoint.position.x;
+                    var RAnkleY = keypoint.position.y;
+                    bits[18] = RAnkleX;
+                    bits[19] = RAnkleY;
+                }
+                if (i == posenet.partIds['leftShoulder']) {
+                    var LShoulderX = keypoint.position.x;
+                    var LShoulderY = keypoint.position.y;
+                    bits[20] = LShoulderX;
+                    bits[21] = LShoulderY;
+                }
+                if (i == posenet.partIds['rightShoulder']) {
+                    var RShoulderX = keypoint.position.x;
+                    var RShoulderY = keypoint.position.y;
+                    bits[22] = RShoulderX;
+                    bits[23] = RShoulderY;
+                }
+            }
         }
     }
-      }
 
-      video.addEventListener('seeked', function() {
-          generateThumbnail(i);
-          i += 0.5;
-          if (i <= this.duration) {
-              this.currentTime = i;
-          }
-          else {
-              // Do something idk 
-          }
-      });
-      //onload call setup
-      window.onload = setup;
-  </script>
+    function draw() {
+        collect();
+        var context = defaultCanvas0.getContext('2d');
+        context.clearRect(0,0,600,800);
+        //background(0);
+
+        fill(0, 150, 150);
+        noStroke();
+        for (i = 0; i <= bits.length; i += 2) {
+            ellipse(bits[i], bits[i + 1], 10, 10);
+        }
+
+        strokeWeight(4);
+
+        // Left side
+        stroke(0, 0, 255);
+        line(bits[0], bits[1], bits[4], bits[5]); // left wrist to left elbow
+        line(bits[4], bits[5], bits[20], bits[21]); // left elbow to left shoulder
+        line(bits[20], bits[21], bits[8], bits[9]); // left shoulder to left hip
+        line(bits[8], bits[9], bits[12], bits[13]); // left hip to left knee
+        line(bits[12], bits[13], bits[16], bits[17]); //left knee to left ankle
+
+        // Right side
+        stroke(255, 0, 0);
+        line(bits[2], bits[3], bits[6], bits[7]); // right wrist to right elbow
+        line(bits[6], bits[7], bits[22], bits[23]); // right elbow to right shoulder
+        line(bits[22], bits[23], bits[10], bits[11]); // right shoulder to right hip
+        line(bits[10], bits[11], bits[14], bits[15]); // right hip to right knee
+        line(bits[14], bits[15], bits[18], bits[19]); // right knee to right ankle
+
+        // Middle side
+        stroke(128, 0, 128);
+        line(bits[20], bits[21], bits[22], bits[23]); // left shoulder to right shoulder
+        line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
+
+    }
+
+
+    video.addEventListener('seeked', function() {
+        generateThumbnail(tStamp);
+        tStamp += 0.1;
+        if (tStamp <= this.duration) {
+            this.currentTime = tStamp;
+        } else {
+            // Do something idk 
+        }
+    });
+    //onload call setup
+    window.onload = setup;
+</script>
+
 </html>
