@@ -8,3 +8,9 @@ pip3 install keras
 pip3 install scikit-image
 pip3 install tqdm
 ```
+
+**Citations**
+VGG16 Model for Keras:
+  Very Deep Convolutional Networks for Large-Scale Image Recognition
+  K. Simonyan, A. Zisserman
+  arXiv:1409.1556
