@@ -9,8 +9,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showImagePicker: Bool = false
+    @State private var image: Image? = nil
     var body: some View {
-        Text("Hello World")
+        //Text("Ace AI")
+        VStack{
+            
+            image?.resizable()
+                .scaledToFit()
+            
+            Button("Open Camera"){
+                self.showImagePicker = true
+            }.padding()
+            
+            
+        }.sheet(isPresented:self.$showImagePicker){
+            PhotoCaptureView(showImagePicker: self.$showImagePicker, image: self.$image)
+        }
     }
 }
 
@@ -19,3 +34,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
