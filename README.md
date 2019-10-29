@@ -9,6 +9,8 @@ pip3 install scikit-image
 pip3 install tqdm
 ```
 
+Make sure you're on the latest Xcode environment
+
 **Citations**
 VGG16 Model for Keras:
   Very Deep Convolutional Networks for Large-Scale Image Recognition
