@@ -18,7 +18,7 @@
     var keypoints;
     var tStamp; //capture image and move it over and putting it in small canvas
     var minPartConfidence;
-
+    
     function setup() {
         bg = loadImage("tStamp")
         createCanvas(800, 600);
@@ -152,6 +152,7 @@
         noStroke();
         for (i = 0; i <= bits.length; i += 2) {
             ellipse(bits[i], bits[i + 1], 10, 10);
+        
         }
 
         strokeWeight(4);
@@ -176,7 +177,7 @@
         stroke(128, 0, 128);
         line(bits[20], bits[21], bits[22], bits[23]); // left shoulder to right shoulder
         line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
-
+        saveCanvas('defaultCanvas0', 'png');
     }
 
 
