@@ -1,23 +1,27 @@
 {
-  "name": "goingforgold",
-  "version": "1.0.0",
-  "description": "Senior D Project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chloequinto/GoingForGold.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chloequinto/GoingForGold/issues"
-  },
-  "homepage": "https://github.com/chloequinto/GoingForGold#readme",
-  "dependencies": {
-    "@tensorflow-models/posenet": "^2.1.3",
-    "ccapture.js": "^1.1.0"
-  }
+    "name": "goingforgold",
+    "version": "1.0.0",
+    "description": "Senior D Project",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/chloequinto/GoingForGold.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/chloequinto/GoingForGold/issues"
+    },
+    "homepage": "https://github.com/chloequinto/GoingForGold#readme",
+    "dependencies": {
+        "@tensorflow-models/posenet": "^2.1.3",
+        "@tensorflow/tfjs-converter": "^1.3.1",
+        "@tensorflow/tfjs-core": "^1.3.1",
+        "amd-loader": "0.0.8",
+        "ccapture.js": "^1.1.0",
+        "requirejs": "^2.3.6"
+    }
 }
