@@ -4,8 +4,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
     <script src="p5.js"></script>
-    <script src="ffmpegserver.js/dist/CCapture.js"></script>
-    <script src="ffmpegserver.js/dist/ffmpegserver.min.js"></script>
+    <!--<script src="ffmpegserver.js/dist/CCapture.js"></script>
+    <script src="ffmpegserver.js/dist/ffmpegserver.min.js"></script>-->
     <!-- <script scr="index.js"></script> -->
 </head>
 
@@ -20,13 +20,13 @@
     var keypoints;
     var tStamp; //capture image and move it over and putting it in small canvas
     var minPartConfidence;
-    var fps = 30;
-    var capturer = new CCapture({
-        format: 'ffmpegserver',
-        framerate: 60,
-        extension: ".mp4",
-        codec: "mpeg4",
-    });
+    //var fps = 30;
+   // var capturer = new CCapture({
+    //    format: 'ffmpegserver',
+      //  framerate: 60,
+        //extension: ".mp4",
+       // codec: "mpeg4",
+    //});
 
     
     function setup() {
@@ -35,7 +35,7 @@
         //background(10, 0, 0);
         tStamp = 0;
         minPartConfidence = 0.3;
-        capturer.start();
+        //capturer.start();
         
     }
     video.addEventListener('loadeddata', function() {
@@ -194,10 +194,10 @@
         stroke(128, 0, 128);
         line(bits[20], bits[21], bits[22], bits[23]); // left shoulder to right shoulder
         line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
-       // saveCanvas('defaultCanvas0' ,'png');
+        saveCanvas('defaultCanvas0' ,'png');
        //console.log('capturing frame');
        //capturer.capture(document.getElementById('defaultCanvas0'));
-       capturer.capture(defaultCanvas0);
+       //capturer.capture(defaultCanvas0);
     }
 
 
@@ -212,8 +212,8 @@
     });
     //onload call setup
     window.onload = setup;
-    capturer.stop();
-    capturer.save()
+    //capturer.stop();
+    //capturer.save()
 </script>
 
 </html>
