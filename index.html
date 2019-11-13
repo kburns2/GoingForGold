@@ -32,21 +32,28 @@
 
 
     function setup() {
-        bg = loadImage("tStamp")
+        // bg = loadImage("tStamp") 
         createCanvas(800, 600);
         //background(10, 0, 0);
         tStamp = 0;
-        minPartConfidence = 0.3;
+        minPartConfidence = 0.3; //Threshold for bad confidence
         //capturer.start();
 
     }
+
+    /**
+    loadeddata event 
+        This event is fired when the frame at the current playback position of the media has finished loading
+    **/
+
     video.addEventListener('loadeddata', function() {
-        this.currentTime = tStamp;
-        console.log(tStamp);
+        this.currentTime = tStamp; //current time is set to tStamp which is at 0 when loadeddata is started 
     });
+
     video.addEventListener('loadeddata', function() {
-        var duration = video.duration;
-        var tStamp = 0;
+        var duration = video.duration; //full time length of video
+        var tStamp = 0; //iterator 
+
         var interval = setInterval(function() {
             video.currentTime = tStamp;
             generateThumbnail(tStamp);
@@ -56,13 +63,22 @@
     });
 
     function generateThumbnail(tStamp) {
+        /**
+            Generate new image with posenet given the time iterator 
+        **/
         var context = thecanvas.getContext('2d');
-        context.drawImage(video, 0, 0, 800, 600);
+
+        context.drawImage(video, 0, 0, 800, 600); //Dimensions 800 x 600 
+
         var dataURL = thecanvas.toDataURL();
+
         var img = document.createElement('img');
+
         img.setAttribute('src', dataURL);
-        document.getElementById('thecanvas').appendChild(img);
-        posenet.load().then(function(net) {
+
+        document.getElementById('thecanvas').appendChild(img); //Places the new generated image right next to 'thecanvas'
+
+        posenet.load().then(function(net) { //Posenet
             const pose = net.estimateSinglePose(img, {
                 flipHorizontal: false
             });
@@ -241,14 +257,25 @@
     //     //capturer.capture(defaultCanvas0);
     // }
 
-
+    /**
+        A seeked event is fired when a seek operation completed, the current playback position has changed
+        and the boolean seeking attribute is changed to false 
+    **/
     video.addEventListener('seeked', function() {
+        /**
+            Video has been seeked, so now current frames 
+            will show as we expect.  
+        **/
+
         generateThumbnail(tStamp);
+        //when frame is captured, add 0.1 seconds 
         tStamp += 0.1;
+        //If we haven't reached the en d 
         if (tStamp <= this.duration) {
+            //will trigger another seeked event 
             this.currentTime = tStamp;
         } else {
-            // Do something idk 
+            // Do nothing else 
         }
     });
     //onload call setup
