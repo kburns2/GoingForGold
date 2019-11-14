@@ -23,6 +23,7 @@
     var tStamp; //capture image and move it over and putting it in small canvas
     var minPartConfidence;
     var count = 0;
+    // var points = [];
     //var fps = 30;
     // var capturer = new CCapture({
     //    format: 'ffmpegserver',
@@ -126,7 +127,7 @@
             line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
 
             console.log("im hungry");
-            
+
             console.log(points);
 
             count++;
@@ -195,7 +196,7 @@
                     var LKneeY = keypoint.position.y;
                     bits[12] = LKneeX;
                     bits[13] = LKneeY;
-                    ponits.push([count, LKneeX, LKneeY]);
+                    points.push([count, LKneeX, LKneeY]);
                 }
                 if (i == posenet.partIds['rightKnee']) {
                     var RKneeX = keypoint.position.x;
