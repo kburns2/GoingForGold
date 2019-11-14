@@ -22,6 +22,7 @@
     var keypoints;
     var tStamp; //capture image and move it over and putting it in small canvas
     var minPartConfidence;
+    var count = 0;
     //var fps = 30;
     // var capturer = new CCapture({
     //    format: 'ffmpegserver',
@@ -124,6 +125,8 @@
             line(bits[20], bits[21], bits[22], bits[23]); // left shoulder to right shoulder
             line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
 
+            count++;
+
             // capturer.stop();
             //capturer.save();
             //return;
@@ -134,6 +137,7 @@
     // console.log("here");
 
     var bits = [];
+    var points = [[[]]];
 
     function collect() {
         console.log('in collect');
@@ -145,72 +149,84 @@
                     var LWristY = keypoint.position.y;
                     bits[0] = LWristX;
                     bits[1] = LWristY;
+                    points.push([count, LWristX, LWristY]);
                 }
                 if (i == posenet.partIds['rightWrist']) {
                     var RWristX = keypoint.position.x;
                     var RWristY = keypoint.position.y;
                     bits[2] = RWristX;
                     bits[3] = RWristY;
+                    points.push([count, RWristX, RWristY]);
                 }
                 if (i == posenet.partIds['leftElbow']) {
                     var LElbowX = keypoint.position.x;
                     var LElbowY = keypoint.position.y;
                     bits[4] = LElbowX;
                     bits[5] = LElbowY;
+                    points.push([count, LElbowX, LElbowY]);
                 }
                 if (i == posenet.partIds['rightElbow']) {
                     var RElbowX = keypoint.position.x;
                     var RElbowY = keypoint.position.y;
                     bits[6] = RElbowX;
                     bits[7] = RElbowY;
+                    points.push([count, RElbowX, RElbowY]);
                 }
                 if (i == posenet.partIds['leftHip']) {
                     var LHipX = keypoint.position.x;
                     var LHipY = keypoint.position.y;
                     bits[8] = LHipX;
                     bits[9] = LHipY;
+                    points.push([count, LHipX, LHipY]);
                 }
                 if (i == posenet.partIds['rightHip']) {
                     var RHipX = keypoint.position.x;
                     var RHipY = keypoint.position.y;
                     bits[10] = RHipX;
                     bits[11] = RHipY;
+                    points.push([count, RHipX, RHipY]);
                 }
                 if (i == posenet.partIds['leftKnee']) {
                     var LKneeX = keypoint.position.x;
                     var LKneeY = keypoint.position.y;
                     bits[12] = LKneeX;
                     bits[13] = LKneeY;
+                    ponits.push([count, LKneeX, LKneeY]);
                 }
                 if (i == posenet.partIds['rightKnee']) {
                     var RKneeX = keypoint.position.x;
                     var RKneeY = keypoint.position.y;
                     bits[14] = RKneeX;
                     bits[15] = RKneeY;
+                    points.push([count, RKneeX, RKneeY]);
                 }
                 if (i == posenet.partIds['leftAnkle']) {
                     var LAnkleX = keypoint.position.x;
                     var LAnkleY = keypoint.position.y;
                     bits[16] = LAnkleX;
                     bits[17] = LAnkleY;
+                    points.push([count, LAnkleX, LAnkleY]);
                 }
                 if (i == posenet.partIds['rightAnkle']) {
                     var RAnkleX = keypoint.position.x;
                     var RAnkleY = keypoint.position.y;
                     bits[18] = RAnkleX;
                     bits[19] = RAnkleY;
+                    points.push([count, RAnkleX, RAnkleY]);
                 }
                 if (i == posenet.partIds['leftShoulder']) {
                     var LShoulderX = keypoint.position.x;
                     var LShoulderY = keypoint.position.y;
                     bits[20] = LShoulderX;
                     bits[21] = LShoulderY;
+                    points.push([count, LShoulderX, LShoulderY]);
                 }
                 if (i == posenet.partIds['rightShoulder']) {
                     var RShoulderX = keypoint.position.x;
                     var RShoulderY = keypoint.position.y;
                     bits[22] = RShoulderX;
                     bits[23] = RShoulderY;
+                    points.push([count, RShoulderX, RShoulderY]);
                 }
             }
         }
