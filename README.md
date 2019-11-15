@@ -20,6 +20,7 @@ pip3 install tqdm
 npm install react-navigation
 npm install react-navigation-stack
 npm install react-navigation-tabs
+npm install packages
 ```
 - For videos 
 ```
