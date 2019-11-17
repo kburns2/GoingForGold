@@ -57,6 +57,7 @@
     **/
 
     video.addEventListener('loadeddata', function() {
+        console.log("Loading Completed!!")
         this.currentTime = tStamp; //current time is set to tStamp which is at 0 when loadeddata is started 
         count1++;
     });
@@ -71,7 +72,6 @@
             video.currentTime = iter;
             generateThumbnail(iter);
             iter = iter + 1;
-            // console.log("iter", iter);
             if (iter > duration) clearInterval(interval); //tStamp is the duration of the video
         }, 200);
 
@@ -99,7 +99,6 @@
             });
             return pose;
         }).then(function(pose) {
-            count++;
             console.log(pose);
             keypoints = pose.keypoints; //different x,y values; keypoint is array
 
@@ -110,14 +109,12 @@
             var context = defaultCanvas0.getContext('2d');
 
             context.clearRect(0, 0, 600, 800);
-            //background(0);
-
+            count++;
 
             fill(0, 150, 150);
             noStroke();
             for (i = 0; i <= bits.length; i += 2) {
                 ellipse(bits[i], bits[i + 1], 10, 10);
-
             }
 
             strokeWeight(4);
@@ -144,7 +141,6 @@
             line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
 
             console.log("count*********", count);
-            // console.log("poseTime...............", poseTime);
 
             csvContent = "data:text/csv;charset=utf-8,";
 
@@ -164,9 +160,6 @@
             //return;
         })
     }
-    // console.log("pose");
-    // console.log(pose);
-    // console.log("here");
 
     var bits = [];
     var points = [];
@@ -263,7 +256,6 @@
             }
 
         }
-        // poseTime += .1;
     }
 
     /**
@@ -288,14 +280,6 @@
             this.currentTime = tStamp;
             // video.currentTime = video.currentTime;
             console.log("-----in here-----")
-                // } else if (video.addEventListener('ended', myFunction)) {
-                //     function myFunction() {
-                //         console.log("-----LOCATION CHANGE WOOOT -----")
-                //         console.log("downloading here...number uno .....");
-
-
-            //         link.click();
-            //     }
         } else {
             console.log("-----LOCATION CHANGE 2 -----")
             console.log("printing", count1);
@@ -306,44 +290,7 @@
         console.log("tStamp: ", tStamp);
         console.log("Vid.CurrentT === ", video.currentTime);
         console.log("this.duration: ", this.duration);
-
-        // console.log('iter + duration =  ', 0.1 + this.duration);
-        // console.log("cT2------>", this.currentTime);
-        // console.log('sda: ', this.currentTime + 0.1);
-
-        // if (tStamp > video.duration) {
-        //     console.log("printing", count1);
-        //     console.log("downloading here...");
-
-        //     link.click();
-        // }
-        // if (poseTime) {
-        //     console.log("printing", count1);
-        //     console.log("downloading here...");
-
-        //     link.click();
-        // }
     });
-
-    // if (tStamp > video.duration) {
-    //     document.getElementById("video").addEventListener("ended", myFunction);
-
-    //     function myFunction() {
-    //         console.log("downloading here...");
-
-    //         link.click();
-    //     }
-    // }
-
-    // video.addEventListener('ended', function() {
-    //     generateThumbnail(iter);
-
-    //     console.log("event ended!!!!");
-    //     console.log("downloading here...");
-
-    //     link.click();
-    // });
-
 
     //onload call setup
     window.onload = setup;
