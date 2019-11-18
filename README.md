@@ -15,6 +15,17 @@ pip3 install tqdm
 
 ## React Native 
 
+- For Setup 
+```
+npm install expo-cli --global 
+npm install 
+```
+
+- Running react native 
+``` 
+expo start
+```
+
 - For react navigation
 ```
 npm install react-navigation
@@ -25,6 +36,11 @@ npm install packages
 - For videos 
 ```
 npm install react-native-video
+```
+
+- Misc 
+```
+npm install react-native-paper
 ```
 
 Make sure to link all these to the project once installed
