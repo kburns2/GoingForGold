@@ -4,23 +4,26 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
     <script src="p5.js"></script>
-    <script src="ffmpegserver.js"></script>
-    <script src="CCapture.js"></script>
+    <!-- <script src="ffmpegserver.js"></script>
+    <script src="CCapture.js"></script> -->
     <!--<script src="ffmpegserver.js/dist/CCapture.js"></script>
     <script src="ffmpegserver.js/dist/ffmpegserver.min.js"></script>-->
     <!-- <script scr="index.js"></script> -->
 </head>
 
 <body>
-
+    <h1> Please Wait to Download Until You See: Finished Computation Click Download Button </h1>
+    
     <video id="video" src="/video/tennis_serving.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
+    <button onClick=downloadMahCSV()>Download CSV</button>
+    <div id="FinishedCompute"></div>
 </body>
 
 <script>
     //Variables
     var keypoints;
-    var tStamp; //capture image and move it over and putting it in small canvas
+    var tStamp =0; 
     var minPartConfidence;
     var count = 0;
     var count1 = 0;
@@ -43,32 +46,18 @@
 
 
     function setup() {
-        // bg = loadImage("tStamp") 
         createCanvas(800, 600);
-        //background(10, 0, 0);
         tStamp = 0;
         minPartConfidence = 0.3; //Threshold for bad confidence
-        //capturer.start();
-
     }
 
-    /**
-    loadeddata event 
-        This event is fired when the frame at the current playback position of the media has finished loading
-    **/
-
     video.addEventListener('loadeddata', function() {
-        console.log("Loading Completed!!")
         this.currentTime = tStamp; //current time is set to tStamp which is at 0 when loadeddata is started 
-        count1++;
-    });
-
-    video.addEventListener('loadeddata', function() {
+        console.log("Loading Completed!!")
         var duration = video.duration; //full time length of video
-        // var tStamp = 0; //iterator 
+        console.log("Video Duration: ", duration)
         iter = 0;
         count1++;
-        console.log("triggered here++++++++++++++++++++++++++++++++")
         var interval = setInterval(function() {
             video.currentTime = iter;
             generateThumbnail(iter);
@@ -101,7 +90,7 @@
             });
             return pose;
         }).then(function(pose) {
-            // temp++;
+     
 
             console.log(pose);
             keypoints = pose.keypoints; //different x,y values; keypoint is array
@@ -145,7 +134,7 @@
             line(bits[8], bits[9], bits[10], bits[11]); // left hip to right hip
 
             count++;
-            console.log("count*********", count);
+            console.log("Number of Poses: ", count);
 
             csvContent = "data:text/csv;charset=utf-8,";
 
@@ -160,7 +149,7 @@
             link.setAttribute("download", "my_data.csv");
             document.body.appendChild(link); // Required for FF
 
-            console.log("count....", count, "VS temp...", temp);
+            // console.log("count....", count, "VS temp...", temp);
 
             //HARD CODED #92 to get all frames counted by current video
             // if (count == temp && count == 92) {
@@ -180,8 +169,6 @@
     var points = [];
 
     function collect() {
-        console.log('in collect');
-        // temp++;
         for (var i = 0; i < keypoints.length; i++) {
             var keypoint = keypoints[i];
             if (keypoint.score > minPartConfidence) {
@@ -270,6 +257,7 @@
                     points.push([count, RShoulderX, RShoulderY]);
                 }
             }
+            // console.log(points)
 
         }
     }
@@ -284,12 +272,11 @@
             Video has been seeked, so now current frames 
             will show as we expect.  
         **/
-
         generateThumbnail(iter);
         //when frame is captured, add 0.1 seconds 
         tStamp += 0.1;
         count1++;
-        console.log("count:", count, "VS count1: ", count1)
+        // console.log("count:", count, "VS count1: ", count1)
             //If we haven't reached the end 
 
         /*if we have 0.1 added to this.duration, 
@@ -298,29 +285,32 @@
             //will trigger another seeked event 
             this.currentTime = tStamp;
             // video.currentTime = video.currentTime;
-            console.log("-----in here-----")
+            // console.log("-----in here-----")
         }
         // console.log("temp...", temp);
         // console.log("count....", count, "VS temp...", temp);
         // // if (count == count1 + 7) {
         else {
 
-            console.log("-----LOCATION CHANGE 2 -----");
-            console.log("printing", count1);
-            console.log("downloading here... numero 2 location....");
-
-            link.click();
+            // console.log("-----LOCATION CHANGE 2 -----");
+            // console.log("printing", count1);
+            // console.log("downloading here... numero 2 location....");
+            document.getElementById("FinishedCompute").innerHTML = "Finished Computation Click Download Button"
+            // link.click();
         }
 
-        console.log("tStamp: ", tStamp);
-        console.log("Vid.CurrentT === ", video.currentTime);
-        console.log("this.duration: ", this.duration);
+        // console.log("tStamp: ", tStamp);
+        // console.log("Vid.CurrentT === ", video.currentTime);
+        // console.log("this.duration: ", this.duration);
     });
 
-    //onload call setup
+    function downloadMahCSV(){
+        downloadMahCSV = function(){}; // kill it as soon as it was called
+     console.log('Downloading CSV'); // your stuff here
+     link.click();
+};
+
     window.onload = setup;
-    //capturer.stop();
-    //capturer.save()
-</script>
+</script> 
 
 </html>
