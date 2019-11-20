@@ -12,11 +12,11 @@
 </head>
 
 <body>
-    <h1> Please Wait to Download Until You See: Finished Computation Click Download Button </h1>
+    <!-- <h1> Please Wait to Download Until You See: Finished Computation Click Download Button </h1> -->
     
     <video id="video" src="/video/tennis_serving.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
-    <button onClick=downloadMahCSV()>Download CSV</button>
+    <!-- <button onClick=downloadMahCSV()>Download CSV</button> -->
     <div id="FinishedCompute"></div>
 </body>
 
@@ -295,7 +295,13 @@
             // console.log("-----LOCATION CHANGE 2 -----");
             // console.log("printing", count1);
             // console.log("downloading here... numero 2 location....");
-            document.getElementById("FinishedCompute").innerHTML = "Finished Computation Click Download Button"
+            // document.getElementById("FinishedCompute").innerHTML = "Finished Computation Click Download Button"
+            var a = 1 + 3;
+            var b;
+            setTimeout(function() {
+                console.log("Downloading")
+                link.click();
+            },(3 * 1000));
             // link.click();
         }
 
@@ -304,11 +310,9 @@
         // console.log("this.duration: ", this.duration);
     });
 
-    function downloadMahCSV(){
-        downloadMahCSV = function(){}; // kill it as soon as it was called
-     console.log('Downloading CSV'); // your stuff here
-     link.click();
-};
+
+
+    
 
     window.onload = setup;
 </script> 
