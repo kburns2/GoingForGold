@@ -58,7 +58,7 @@
             generateThumbnail(iter);
             iter = iter + 1;
             if (iter > duration) clearInterval(interval); //tStamp is the duration of the video
-        }, 200);
+        }, 50); //Video Duration + 0.50 seconds = number of poses 
 
     });
 
