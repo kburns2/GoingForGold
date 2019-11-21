@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <p>Enter the source of the video.</p>
+        <form id="frm1">
+            <!--URL: <input id="url" type="text" name="fname"><br>
+            <input type="button" onclick="write()" value="Please Write the URL">--> 
+            <form action="/action_page.php">
+                <input type="file" name="video" accept="mp4/*">
+                <input type="submit">
+              </form>
+        </form>
+        <video id="myVideo" controls>
+            <source src="video/" type="video/mp4; codecs=dirac, speex">
+            Your browser does not support the <code>video</code> element.
+        </video>
+     <script>
+         function write()
+         {
+             var vid = document.getElementById('myVideo');
+             vid.src = document.getElementById('url').value;
+             vid.play();
+         }
+     </script>
+</body>
+</html>
