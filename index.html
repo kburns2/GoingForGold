@@ -14,7 +14,7 @@
 <body>
     <!-- <h1> Please Wait to Download Until You See: Finished Computation Click Download Button </h1> -->
 
-    <video id="video" src="/video/g3.mp4"></video>
+    <video id="video" src="/video/g4.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
     <div id="FinishedCompute"></div>
 </body>
@@ -58,7 +58,7 @@
             generateThumbnail(iter);
             iter = iter + 1;
             if (iter > duration) clearInterval(interval); //tStamp is the duration of the video
-        }, 200);
+        }, 50);
 
     });
 
