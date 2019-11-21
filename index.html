@@ -13,27 +13,23 @@
 
 <body>
     <!-- <h1> Please Wait to Download Until You See: Finished Computation Click Download Button </h1> -->
-    
-    <video id="video" src="/video/tennis_serving.mp4"></video>
+
+    <video id="video" src="/video/g3.mp4"></video>
     <canvas id="thecanvas" width="800" height="600"></canvas>
-    <!-- <button onClick=downloadMahCSV()>Download CSV</button> -->
     <div id="FinishedCompute"></div>
 </body>
 
 <script>
     //Variables
     var keypoints;
-    var tStamp =0; 
+    var tStamp = 0;
     var minPartConfidence;
     var count = 0;
-    var count1 = 0;
-    var addT = 0;
     var csvContent;
     var encodedUri;
     var link;
     var iter;
-    var temp = 0;
-    // var poseTime = 0;
+
 
     // var points = [];
     //var fps = 30;
@@ -57,7 +53,6 @@
         var duration = video.duration; //full time length of video
         console.log("Video Duration: ", duration)
         iter = 0;
-        count1++;
         var interval = setInterval(function() {
             video.currentTime = iter;
             generateThumbnail(iter);
@@ -84,19 +79,15 @@
         document.getElementById('thecanvas').appendChild(img); //Places the new generated image right next to 'thecanvas'
 
         posenet.load().then(function(net) { //Posenet
-            temp++;
             const pose = net.estimateSinglePose(img, {
                 flipHorizontal: false
             });
             return pose;
         }).then(function(pose) {
-     
+
 
             console.log(pose);
             keypoints = pose.keypoints; //different x,y values; keypoint is array
-
-            //the following lines are from draw function which is not commented out.
-            //for some reason keypoints variable was declared as undefined otherwise.
 
             collect();
             var context = defaultCanvas0.getContext('2d');
@@ -149,16 +140,6 @@
             link.setAttribute("download", "my_data.csv");
             document.body.appendChild(link); // Required for FF
 
-            // console.log("count....", count, "VS temp...", temp);
-
-            //HARD CODED #92 to get all frames counted by current video
-            // if (count == temp && count == 92) {
-            //     console.log("-----LOCATION CHANGE 2 -----");
-            //     console.log("printing", count1);
-            //     console.log("downloading here... numero 2 location....");
-
-            //     link.click();
-            // }
             // capturer.stop();
             //capturer.save();
             //return;
@@ -257,8 +238,6 @@
                     points.push([count, RShoulderX, RShoulderY]);
                 }
             }
-            // console.log(points)
-
         }
     }
 
@@ -275,36 +254,24 @@
         generateThumbnail(iter);
         //when frame is captured, add 0.1 seconds 
         tStamp += 0.1;
-        count1++;
-        // console.log("count:", count, "VS count1: ", count1)
-            //If we haven't reached the end 
+        //If we haven't reached the end 
 
         /*if we have 0.1 added to this.duration, 
         we get an extra frame appened to CSV as compared to when we dont */
-        if (tStamp <= this.duration + 0.1) {
+        if (tStamp <= this.duration) {
             //will trigger another seeked event 
             this.currentTime = tStamp;
-            // video.currentTime = video.currentTime;
-            // console.log("-----in here-----")
-        }
-        // console.log("temp...", temp);
-        // console.log("count....", count, "VS temp...", temp);
-        // // if (count == count1 + 7) {
-        else {
+        } else {
             setTimeout(function() {
                 console.log("Downloading")
                 link.click();
-            },(3 * 1000));
-      
+            }, (3 * 1000));
+
         }
 
     });
 
-
-
-    
-
     window.onload = setup;
-</script> 
+</script>
 
 </html>
