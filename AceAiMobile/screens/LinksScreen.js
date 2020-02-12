@@ -1,3 +1,4 @@
+//now the camera page
 import React, {Component} from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { Camera } from 'expo-camera';
