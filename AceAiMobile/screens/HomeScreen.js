@@ -2,9 +2,9 @@ import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Linking } from 'react-native';
 // import { TextInput, Button } from 'react-native-paper';
-import { MonoText } from '../components/StyledText';
+//import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   state = {
     email: '',
     password: ''
@@ -42,48 +42,22 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        <View style={styles.loginContainer}>
-          <View style = {styles.container}>
-            <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = "Email"
-               placeholderTextColor = "#17333C"
-               backgroundColor = "#E0EFED"
-               autoCapitalize = "none"
-               fontWeight = 'bold'
-               onChangeText = {this.handleEmail}/>
-            
-            <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = "Password"
-               placeholderTextColor = "#17333C"
-               backgroundColor = "#E0EFED"
-               fontWeight = 'bold'
-               autoCapitalize = "none"
-               onChangeText = {this.handlePassword}/>
-
-               
-            
-            <TouchableOpacity
-               style = {styles.submitButton}
-               onPress = {
-                  () => this.login(this.state.email, this.state.password)
-               }>
-               <Text style = {styles.submitButtonText}> Sign In </Text>
-            </TouchableOpacity>
-            <Text 
-              style={styles.loginLink}
-              onPress={() => Linking.openURL('http://google.com')}>
-              Sign Up
-            </Text>
-         </View>
-          <View>
-
+        <View> 
+          <TouchableOpacity
+              style = {styles.buttons}
+              onPress={() => navigation.navigate('Links')}>
+              <Text style = {styles.buttonsText}>Check your serve</Text>
+          </TouchableOpacity>
         </View>
 
+        <View> 
+          <TouchableOpacity
+              style = {styles.buttons}
+              onPress={() => navigation.navigate('Settings')}>
+              <Text style = {styles.buttonsText}>Check your previous serves</Text>
+          </TouchableOpacity>
         </View>
 
-        <DevelopmentModeNotice />
       </ScrollView>
     </View>
   );
@@ -92,22 +66,6 @@ export default function HomeScreen() {
 HomeScreen.navigationOptions = {
   header: null,
 };
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    return (
-      <Text style={styles.developmentModeText}>
-        {/* Development mode is enabled */}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        {/* You are not in development mode */}
-      </Text>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   background: {
@@ -155,6 +113,29 @@ const styles = StyleSheet.create({
   },
   homeScreenFilename: {
     marginVertical: 7,
+  },
+  buttons:{
+    backgroundColor: '#fff',
+    borderRadius: 25, 
+    alignItems: 'center', 
+    margin: 15,
+    height: 40,
+       shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6
+  },
+
+  buttonsText: {
+    marginTop: 10,
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#17333C',
+    fontWeight: "bold"
   },
 
   container: {

@@ -1,24 +1,25 @@
+//now the analysis page
 import React from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Linking } from 'react-native';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({navigation}) {
   /** 
    * 
    * Add logic for buttons 
    */
-  state = {
-    email: '',
-    password: ''
- }
- handleEmail = (text) => {
-    this.setState({ email: text })
- }
- handlePassword = (text) => {
-    this.setState({ password: text })
- }
- login = (email, pass) => {
-    alert('email: ' + email + ' password: ' + pass)
- }
+//   state = {
+//     email: '',
+//     password: ''
+//  }
+//  handleEmail = (text) => {
+//     this.setState({ email: text })
+//  }
+//  handlePassword = (text) => {
+//     this.setState({ password: text })
+//  }
+//  login = (email, pass) => {
+//     alert('email: ' + email + ' password: ' + pass)
+//  }
   return (
     <View style={styles.background}>
       <ScrollView  style={styles.background}  contentContainerStyle={styles.contentContainer}>
@@ -35,25 +36,25 @@ export default function SettingsScreen() {
             <Text>SHOULD GO</Text>
          </View>
         </View>
-      <View> 
-      <Text style={styles.accuracyText}> Your Serve Accuracy: </Text>
-      <TouchableOpacity
-        style = {styles.buttons}
-        onPress = {() => this.login(this.state.email, this.state.password)}>
-        <Text style = {styles.buttonsText}> Improve Your Serve</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-          style = {styles.buttons}
-          onPress = {() => this.login(this.state.email, this.state.password)}>
-          <Text style = {styles.buttonsText}>Check new serve</Text>
-      </TouchableOpacity>
 
+        <View> 
+          <Text style={styles.accuracyText}> Your Serve Accuracy: </Text>
+          <TouchableOpacity
+            style = {styles.buttons}
+            onPress = {() => this.login(this.state.email, this.state.password)}>
+            <Text style = {styles.buttonsText}> Improve Your Serve</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+              style = {styles.buttons}
+              onPress={() => navigation.navigate('Links')}>
+              <Text style = {styles.buttonsText}>Check another serve</Text>
+          </TouchableOpacity>
         </View> 
+
       </ScrollView>
     </View>
   );
 }
-
 
 SettingsScreen.navigationOptions = {
   header: null,
