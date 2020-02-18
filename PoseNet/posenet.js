@@ -8,11 +8,6 @@ var link;
 var iter;
 
 
-// function setup() {
-//     createCanvas(320, 240);
-//     tStamp = 0;
-//     minPartConfidence = 0.3;
-// }
 
 video.addEventListener('loadeddata', function() {
     this.currentTime = tStamp; //current time is set to tStamp which is at 0 when loadeddata is started 
@@ -28,11 +23,12 @@ video.addEventListener('loadeddata', function() {
     }, 50);
 
 });
-
+/**
+ * Creates stick figure 
+ * @param {integer} tStamp 
+ */
 function generateThumbnail(tStamp) {
-    /**
-        Generate new image with posenet given the time iterator 
-    **/
+
     var context = theCanvas.getContext('2d');
 
     context.drawImage(video, 0, 0, 320, 240);
@@ -213,12 +209,11 @@ function collect() {
     A seeked event is fired when a seek operation completed, the current playback position has changed
     and the boolean seeking attribute is changed to false 
 **/
-
+/**
+ * Video has been seeked, so now current frames will show as we expect. 
+ */
 video.addEventListener('seeked', function() {
-    /**
-        Video has been seeked, so now current frames 
-        will show as we expect.  
-    **/
+
     generateThumbnail(iter);
     //when frame is captured, add 0.1 seconds 
     tStamp += 0.1;
