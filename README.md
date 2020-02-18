@@ -13,6 +13,21 @@ pip3 install scikit-image
 pip3 install tqdm
 ```
 
+
+## To Start App 
+```
+cd AceAiMobile 
+rm -rf node_modules 
+npm install 
+expo start 
+```
+
+To Run Simulator 
+- click on "Run on iOS simulator" or "Run on Android device/emulator"   
+
+To Run on Device 
+- Scan QR code    
+
 ## React Native 
 
 - For Setup 
@@ -33,9 +48,9 @@ npm install react-navigation-stack
 npm install react-navigation-tabs
 npm install packages
 ```
-- For videos 
+- For camera 
 ```
-npm install react-native-video
+npm i react-native-camera
 ```
 
 - Misc 
@@ -46,6 +61,9 @@ npm install react-native-paper
 Make sure to link all these to the project once installed
 (i.e. react-native link [what you downloaded])
 
+
+- TODO
+[] Warning Failure prop type on home page     
 ## Citations 
 VGG16 Model for Keras:
   - Very Deep Convolutional Networks for Large-Scale Image Recognition
