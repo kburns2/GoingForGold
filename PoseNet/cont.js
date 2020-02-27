@@ -1,16 +1,18 @@
 /**
  * We want to call posenet.js so we create an element and attach it as its source 
  */
-var script = document.createElement('script'); 
-script.src =  "./posenet.js"; 
+var script = document.createElement('script');
+script.src = "./posenet.js";
 
 // All videos will be called from the video folder 
-var video_list      = ["/video/b1.mp4",
-                        // "/video/g1.mp4",
-                        "/video/g2.mp4"];
+var video_list = ["/video/g4.mp4"
+    // "/video/b1.mp4",
+    //                     // "/video/g1.mp4",
+    //                     "/video/g2.mp4"
+];
 
-var video_index  = 0;
-var video_player  = null;
+var video_index = 0;
+var video_player = null;
 
 
 /**
@@ -22,7 +24,7 @@ function setup() {
     minPartConfidence = 0.3;
 }
 
-function onload(){
+function onload() {
     console.log("[Cont.js] body loaded"); //load 
 
     video_player = document.getElementById("video");
@@ -37,19 +39,18 @@ function onload(){
 /**
  * This functions pauses the video once it has ended which allows posenet.js to download the csv 
  */
-function onVideoEnded(){
-    console.log("Video has ended, posenet csv should be downloading"); 
+function onVideoEnded() {
+    console.log("Video has ended, posenet csv should be downloading");
     setTimeout(function() {
-    video_player.pause(); 
+        video_player.pause();
 
-    if(video_index < video_list.length - 1){
-        video_index++; //go to next video 
-    }
-    else{
-        return;
-    }
-    video_player.setAttribute("src", video_list[video_index]); //change to next video  
-    video_player.play(); //play again 
+        if (video_index < video_list.length - 1) {
+            video_index++; //go to next video 
+        } else {
+            return;
+        }
+        video_player.setAttribute("src", video_list[video_index]); //change to next video  
+        video_player.play(); //play again 
     }, 8000); //wait an extra 8 seconds after posenet finishes so that csv downloads 
 
 }
