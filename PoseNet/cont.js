@@ -5,7 +5,7 @@ var script = document.createElement('script');
 script.src = "./posenet.js";
 
 // All videos will be called from the video folder 
-var video_list = ["/video/g15.mp4"
+var video_list = ["/video/g20.mp4"
     // "/video/b1.mp4",
     //                     // "/video/g1.mp4",
     //                     "/video/g2.mp4"
