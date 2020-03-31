@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <script src="p5.js"></script>
+    <script src="p5.min.js"></script>
+
+    <!-- Cont.js is the javascript file that allows us to 
+        automatically apply posenet to a an array of videos. -->
+    <script src="cont.js"></script>
+</head>
+
+
+
+<body onload="onload();">
+    <h1>PoseNet</h1>
+    <p>Automatically downloads the CSVs </p>
+    <!-- Here, once a video has ended, it will call the function onVideoEnded() found in cont.js -->
+    <video id="video" width="320" height="240" onended="onVideoEnded();" muted="muted"></video>
+
+
+    <canvas id="theCanvas" width="320" height="240"></canvas>
+
+    <canvas id="defaultCanvas0" style="width: 320px; height: 240;" width="320" height="240"></canvas>
+
+    <!-- Progress Bar to see where we are in the download process-->
+    <div id="progress">
+        <h3>Progress: </h3>
+    </div>
+</body>
+
+</html>
